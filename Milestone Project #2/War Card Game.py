@@ -1,4 +1,3 @@
-from hashlib import new
 import random
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
@@ -92,30 +91,39 @@ while game_on:
     player_two_cards = []
     player_two_cards.append(player_two.remove_one())
 
+    at_war = True 
 
-    #while at_war     
-    
+    while at_war:
+        #always draw the last card the player drew
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+            player_one.add_cards(player_one_cards)
+            player_one.add_cards(player_two_cards)
 
+            at_war = False
+        
+        elif player_one_cards[-1].value < player_two_cards[-1].value:
+            player_two.add_cards(player_one_cards)
+            player_two.add_cards(player_two_cards)
 
-# two_hearts = Card("Hearts","Two")
-# print(two_hearts)
-# print(two_hearts.suit)
-# print(two_hearts.rank)
-# print(values[two_hearts.rank])
-# new_deck = Deck()
-# first_card = new_deck.all_cards[0]
-# print(first_card.suit)
-# new_deck.shuffle()
-# for card_object in new_deck.all_cards:
-#     print(card_object)
-# new_card = new_deck.deal_one()
-# print(new_card)
-# print(len(new_deck.all_cards)) 
-# new_player = Player("Seng")
-# print(new_player)
-# new_player.add_cards(first_card)
-# print(new_player)
-# new_player.add_cards([first_card, first_card, first_card])
-# print(new_player)
-# new_player.remove_one()
-# print(new_player)
+            at_war = False
+
+        else:
+            print('War!')
+
+            #Special rule: players lose if they have less than 5 cards
+            if len(player_one.all_cards) < 5:
+                print(f"Player {player_one.name} unable to play war")
+                print(f"Player {player_two.name} wins!")
+                game_on = False
+                break
+
+            if len(player_two.all_cards) < 5:
+                print(f"Player {player_two.name} unable to play war")
+                print(f"Player {player_one.name} wins!")
+                game_on = False
+                break
+
+            else:
+                for num in range(5):
+                    player_one_cards.append(player_one.remove_one())
+                    player_two_cards.append(player_two.remove_one())
