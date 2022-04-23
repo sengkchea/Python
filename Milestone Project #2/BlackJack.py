@@ -217,9 +217,3 @@ while True:
     else:
         print('Thanks for playing!')
         break
-
-
-# test_deck = Deck()
-# test_deck.shuffle()
-# new_card = test_deck.deal()
-# print(new_card)
